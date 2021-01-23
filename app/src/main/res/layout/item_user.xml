@@ -15,7 +15,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary">
+            android:background="@drawable/tcveta_vaz_1">
         </View>
     </LinearLayout>
 
@@ -38,7 +38,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="data"/>
+                    android:text="data"
+                    android:id="@+id/markTextView"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,7 +55,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="data"/>
+                    android:text="data"
+                    android:id="@+id/modelTextView"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,7 +72,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="data"/>
+                    android:text="data"
+                    android:id="@+id/typeTextView"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,7 +89,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="data"/>
+                    android:text="data"
+                    android:id="@+id/vintageTextView"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,7 +106,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="data"/>
+                    android:text="data"
+                    android:id="@+id/counterTextView"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,7 +123,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="data"/>
+                    android:text="data"
+                    android:id="@+id/regTextView"/>
             </LinearLayout>
 
     </LinearLayout>

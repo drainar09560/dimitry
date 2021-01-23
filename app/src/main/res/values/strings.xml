@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">LitvyakSavlibayevTask5</string>
+    <string-array name="mark_arr">
+        <item>Toyota</item>
+        <item>Lada</item>
+        <item>Mitsubishi</item>
+        <item>Mercedes</item>
+        <item>BMW</item>
+        <item>Huyndai</item>
+        <item>Kia</item>
+        <item>Honda</item>
+        <item>RangeRover</item>
+    </string-array>
+    <string-array name="type_arr">
+        <item>Хетчбэк</item>
+        <item>Седан</item>
+        <item>Универсал</item>
+        <item>Кроссовер</item>
+        <item>Внедорожник</item>
+        <item>Купе</item>
+        <item>Кабриолет</item>
+    </string-array>
 </resources>

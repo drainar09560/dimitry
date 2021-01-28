@@ -50,6 +50,7 @@ class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         holder.itenView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(selectElementListener!=null)
                 selectElementListener.selectElement(user);
             }
         });

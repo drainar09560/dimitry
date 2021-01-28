@@ -13,11 +13,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     DataAdapter adapter;
     Spinner spMark, spType;
     User currentUser;
-    Button btnAdd, btnRead, btnClear, btnDelete, btnUpdate;
+    FrameLayout btnAdd, btnRead, btnClear, btnDelete, btnUpdate;
     EditText etModel, etVintage, etCounter, etReg;
     final int DBVersion = 2; // версия БД
 
@@ -46,19 +48,25 @@ public class MainActivity extends AppCompatActivity {
         spMark = findViewById(R.id.spMark);
         spType = findViewById(R.id.spType);
 
-//        adapter.setSelectElementListener(new DataAdapter.SelectElementListener(){
-//
-//            @Override
-//            public void selectElement(User user) {
-//                currentUser = user;
-//                etName.setText(user.getName());
-//                etModel.setText(user.getModel());
-//                etEmail.setText(user.getEmail());
-//                etVintage.setText(String.valueOf(user.getVintage()));
-//                etCounter.setText(String.valueOf(user.getCounter()));
-//                etReg.setText(String.valueOf(user.getReg()));
-//            }
-//        });
+        adapter.setSelectElementListener(new DataAdapter.SelectElementListener(){
+
+            @Override
+            public void selectElement(User user) {
+                currentUser = user;
+
+                List<String> car = Arrays.asList(getResources().getStringArray(R.array.mark_arr));
+
+                spMark.setSelection(car.indexOf(user.getMark()));
+                etModel.setText(user.getModel());
+
+                List<String> type = Arrays.asList(getResources().getStringArray(R.array.type_arr));
+
+                spType.setSelection(type.indexOf(user.getType()));
+                etVintage.setText(String.valueOf(user.getVintage()));
+                etCounter.setText(String.valueOf(user.getCounter()));
+                etReg.setText(String.valueOf(user.getReg()));
+            }
+        });
         RecyclerView recyler = findViewById(R.id.listItem);
         recyler.setAdapter(adapter);
 
@@ -73,9 +81,12 @@ public class MainActivity extends AppCompatActivity {
         ContentValues cv = new ContentValues();
 
         // получаем данные из полей ввода
-        String name = etName.getText().toString();
-        String email = etEmail.getText().toString();
-        String age = etAge.getText().toString();
+        String mark = spMark.getSelectedItem().toString();
+        String model = etModel.getText().toString();
+        String type = spType.getSelectedItem().toString();
+        String vintage = etVintage.getText().toString();
+        String counter = etCounter.getText().toString();
+        String reg = etReg.getText().toString();
 
         // подключаемся к БД
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -85,9 +96,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "--- Insert in mytable: ---");
                 // подготовим данные для вставки в виде пар: наименование столбца - значение
 
-                cv.put("name", name);
-                cv.put("email", email);
-                cv.put("age", age);
+                cv.put("mark", mark);
+                cv.put("model", model);
+                cv.put("type", type);
+                cv.put("vintage", vintage);
+                cv.put("counter", counter);
+                cv.put("reg", reg);
                 // вставляем запись и получаем ее ID
                 long rowID = db.insert("mytable", null, cv);
                 Log.d(LOG_TAG, "row inserted, ID = " + rowID);
@@ -108,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 //                dbHelper = new DBHelper(this);
 //                   readBd(dbHelper.getWritableDatabase());
                 break;
-            case R.id.btnDel:
+            case R.id.btnDelete:
                 if (currentUser == null) {
                     break;
                 }
@@ -119,15 +133,18 @@ public class MainActivity extends AppCompatActivity {
                 readBd(db);
                 break;
 
-            case R.id.btnUp:
+            case R.id.btnUpdate:
                 if (currentUser == null) {
                     break;
                 }
                 Log.d(LOG_TAG, "--- Update mytable: ---");
                 // подготовим значения для обновления
-                cv.put("name", name);
-                cv.put("email", email);
-                cv.put("age", age);
+                cv.put("mark", mark);
+                cv.put("model", model);
+                cv.put("type", type);
+                cv.put("vintage", vintage);
+                cv.put("counter", counter);
+                cv.put("reg", reg);
                 // обновляем по id
                 int updCount = db.update("mytable", cv, "id = ?",
                         new String[] {String.valueOf(currentUser.getId())});
@@ -152,31 +169,6 @@ public class MainActivity extends AppCompatActivity {
         String selection = null;
         String[] selectionArgs = null;
 
-        selection = "age < ?";
-        selectionArgs = new String[] { String.valueOf(seekBar.getProgress()) };
-
-        switch ((int) spinner.getSelectedItemId())
-        {
-            case 0:
-                orderBy = NAME_COLUMN;
-                break;
-            case 1:
-                orderBy = NAME_COLUMN+DESC;
-                break;
-            case 2:
-                orderBy = EMAIL_COLUMN;
-                break;
-            case 3:
-                orderBy = EMAIL_COLUMN+DESC;
-                break;
-            case 4:
-                orderBy = AGE_COLUMN;
-                break;
-            case 5:
-                orderBy = AGE_COLUMN+DESC;
-            default:
-                break;
-        }
 
 // делаем запрос всех данных из таблицы mytable, получаем Cursor
         Cursor c = db.query("mytable", null, selection, selectionArgs, null, null, orderBy);

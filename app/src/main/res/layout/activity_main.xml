@@ -145,8 +145,12 @@
             android:id="@+id/btnAdd"
             android:onClick="onClick"
             style="@style/btnContainer">
-          <View style="@style/btnWrap"
-              android:foreground="@drawable/ic_baseline_add_24"/>
+
+            <View
+                style="@style/btnWrap"
+                android:layout_width="23dp"
+                android:layout_height="21dp"
+                android:foreground="@drawable/ic_baseline_add_24" />
         </FrameLayout>
         <FrameLayout
             android:id="@+id/btnRead"

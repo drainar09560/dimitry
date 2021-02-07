@@ -14,22 +14,20 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Марка"
+            android:text="Имя"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:layout_gravity="center_vertical">
         </TextView>
-        <Spinner
-            android:id="@+id/spMark"
+        <EditText
+            android:id="@+id/etName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:layout_gravity="center_vertical"
-            android:entries="@array/mark_arr">
+            android:layout_weight="3">
             <requestFocus>
             </requestFocus>
-        </Spinner>
+        </EditText>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -39,13 +37,13 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Модель"
+            android:text="Фамилия"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1">
         </TextView>
         <EditText
-            android:id="@+id/etModel"
+            android:id="@+id/etSurname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -60,42 +58,43 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Тип"
+            android:text="Отчество"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:layout_gravity="center_vertical">
         </TextView>
-        <Spinner
-            android:id="@+id/spType"
+        <EditText
+            android:id="@+id/etMiddleName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:layout_gravity="center_vertical"
-            android:entries="@array/type_arr">
+            android:layout_gravity="center_vertical">
 
-        </Spinner>
+        </EditText>
 
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Год выпуска"
+            android:text="Пол"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1">
         </TextView>
-        <EditText
-            android:id="@+id/etVintage"
+        <Spinner
+            android:id="@+id/spSex"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="3"
-            android:inputType="number">
-        </EditText>
+            android:inputType="number"
+            android:entries="@array/sex">
+        </Spinner>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -104,37 +103,19 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Пробег"
+            android:text="Смена"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1">
         </TextView>
-        <EditText
-            android:id="@+id/etCounter"
+        <Spinner
+            android:id="@+id/spSmena"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="3"
-            android:inputType="number">
-        </EditText>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Регистр. знак"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1">
-        </TextView>
-        <EditText
-            android:id="@+id/etReg"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3">
-        </EditText>
+            android:inputType="number"
+            android:entries="@array/working_shift">
+        </Spinner>
     </LinearLayout>
 
     <LinearLayout
@@ -148,8 +129,8 @@
 
             <View
                 style="@style/btnWrap"
-                android:layout_width="23dp"
-                android:layout_height="21dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:foreground="@drawable/ic_baseline_add_24" />
         </FrameLayout>
         <FrameLayout
@@ -157,7 +138,7 @@
             android:onClick="onClick"
             style="@style/btnContainer">
             <View style="@style/btnWrap"
-                android:foreground="@drawable/ic_baseline_menu_book_24"
+                android:foreground="@drawable/ic_baseline_assignment_ind_24"
                 />
         </FrameLayout>
         <FrameLayout
@@ -165,7 +146,7 @@
             android:onClick="onClick"
             style="@style/btnContainer">
             <View style="@style/btnWrap"
-                android:foreground="@drawable/ic_baseline_clear_all_24" />
+                android:foreground="@drawable/ic_baseline_clear_24"/>
         </FrameLayout>
 
         <FrameLayout
@@ -181,7 +162,7 @@
             android:onClick="onClick"
             style="@style/btnContainer">
             <View style="@style/btnWrap"
-                android:foreground="@drawable/ic_baseline_update_24"/>
+                android:foreground="@drawable/ic_baseline_change_circle_24"/>
         </FrameLayout>
 
 
@@ -192,9 +173,7 @@
         android:id="@+id/listItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_user"
-        app:spanCount="2"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_user" />
 
 </LinearLayout>

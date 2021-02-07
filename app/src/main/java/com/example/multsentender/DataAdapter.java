@@ -1,10 +1,9 @@
-package com.example.litvyaksavlibayevtask5;
+package com.example.multsentender;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,12 +40,11 @@ class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(DataAdapter.ViewHolder holder, int position) {
         final User user = users.get(position);
-        holder.markView.setText(user.getMark());
-        holder.modelView.setText(user.getModel());
-        holder.typeView.setText(user.getType());
-        holder.vintageView.setText(String.valueOf(user.getVintage()));
-        holder.counterView.setText(String.valueOf(user.getCounter()));
-        holder.regView.setText(String.valueOf(user.getReg()));
+        holder.nameView.setText(user.getName());
+        holder.surnameView.setText(user.getSurname());
+        holder.middleView.setText(user.getMiddle());
+        holder.sexView.setText(user.getSex());
+        holder.smenaView.setText(user.getSmena());
         holder.itenView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,22 +60,20 @@ class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView markView;
-        final TextView modelView;
-        final TextView typeView;
-        final TextView vintageView;
-        final TextView counterView;
-        final TextView regView;
+        final TextView nameView;
+        final TextView surnameView;
+        final TextView middleView;
+        final TextView sexView;
+        final TextView smenaView;
         final View itenView;
         ViewHolder(View view){
             super(view);
             itenView = view;
-            markView = view.findViewById(R.id.markTextView);
-            modelView = (TextView) view.findViewById(R.id.modelTextView);
-            typeView = view.findViewById(R.id.typeTextView);
-            vintageView = view.findViewById(R.id.vintageTextView);
-            counterView = view.findViewById(R.id.counterTextView);
-            regView = view.findViewById(R.id.regTextView);
+            nameView = view.findViewById(R.id.nameTextView);
+            surnameView = (TextView) view.findViewById(R.id.surnameTextView);
+            middleView = view.findViewById(R.id.middleNameTextView);
+            sexView = view.findViewById(R.id.sexTextView);
+            smenaView = view.findViewById(R.id.smenaTextView);
         }
     }
 }

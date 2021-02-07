@@ -1,4 +1,4 @@
-package com.example.litvyaksavlibayevtask5;
+package com.example.multsentender;
 
 public class Singleton {
     private static Singleton instance;

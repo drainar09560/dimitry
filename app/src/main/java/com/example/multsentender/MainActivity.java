@@ -1,4 +1,4 @@
-package com.example.litvyaksavlibayevtask5;
+package com.example.multsentender;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,13 +11,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
     final String LOG_TAG = "myLogs";
     final List<User> users = new ArrayList<>();
     DataAdapter adapter;
-    Spinner spMark, spType;
+    Spinner spSex, spSmena;
     User currentUser;
     FrameLayout btnAdd, btnRead, btnClear, btnDelete, btnUpdate;
-    EditText etModel, etVintage, etCounter, etReg;
+    EditText etName, etSurname, etMiddle;
     final int DBVersion = 2; // версия БД
 
 
@@ -41,12 +38,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         adapter = new DataAdapter(this, users);
-        etModel = findViewById(R.id.etModel);
-        etVintage = findViewById(R.id.etVintage);
-        etCounter = findViewById(R.id.etCounter);
-        etReg = findViewById(R.id.etReg);
-        spMark = findViewById(R.id.spMark);
-        spType = findViewById(R.id.spType);
+        etName = findViewById(R.id.etName);
+        etSurname = findViewById(R.id.etSurname);
+        etMiddle = findViewById(R.id.etMiddleName);
+        spSex = findViewById(R.id.spSex);
+        spSmena = findViewById(R.id.spSmena);
 
         adapter.setSelectElementListener(new DataAdapter.SelectElementListener(){
 
@@ -54,17 +50,16 @@ public class MainActivity extends AppCompatActivity {
             public void selectElement(User user) {
                 currentUser = user;
 
-                List<String> car = Arrays.asList(getResources().getStringArray(R.array.mark_arr));
+                List<String> smena = Arrays.asList(getResources().getStringArray(R.array.working_shift));
 
-                spMark.setSelection(car.indexOf(user.getMark()));
-                etModel.setText(user.getModel());
+                spSmena.setSelection(smena.indexOf(user.getSmena()));
+                etName.setText(user.getName());
 
-                List<String> type = Arrays.asList(getResources().getStringArray(R.array.type_arr));
+                List<String> sex = Arrays.asList(getResources().getStringArray(R.array.sex));
 
-                spType.setSelection(type.indexOf(user.getType()));
-                etVintage.setText(String.valueOf(user.getVintage()));
-                etCounter.setText(String.valueOf(user.getCounter()));
-                etReg.setText(String.valueOf(user.getReg()));
+                spSex.setSelection(sex.indexOf(user.getSex()));
+                etSurname.setText(String.valueOf(user.getSurname()));
+                etMiddle.setText(String.valueOf(user.getMiddle()));
             }
         });
         RecyclerView recyler = findViewById(R.id.listItem);
@@ -81,12 +76,11 @@ public class MainActivity extends AppCompatActivity {
         ContentValues cv = new ContentValues();
 
         // получаем данные из полей ввода
-        String mark = spMark.getSelectedItem().toString();
-        String model = etModel.getText().toString();
-        String type = spType.getSelectedItem().toString();
-        String vintage = etVintage.getText().toString();
-        String counter = etCounter.getText().toString();
-        String reg = etReg.getText().toString();
+        String name = etName.getText().toString();
+        String surname = etSurname.getText().toString();
+        String middlename = etMiddle.getText().toString();
+        String sex = spSex.getSelectedItem().toString();
+        String smena = spSmena.getSelectedItem().toString();
 
         // подключаемся к БД
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -96,12 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "--- Insert in mytable: ---");
                 // подготовим данные для вставки в виде пар: наименование столбца - значение
 
-                cv.put("mark", mark);
-                cv.put("model", model);
-                cv.put("type", type);
-                cv.put("vintage", vintage);
-                cv.put("counter", counter);
-                cv.put("reg", reg);
+                cv.put("name", name);
+                cv.put("surname", surname);
+                cv.put("middlename", middlename);
+                cv.put("sex", sex);
+                cv.put("smena", smena);
                 // вставляем запись и получаем ее ID
                 long rowID = db.insert("mytable", null, cv);
                 Log.d(LOG_TAG, "row inserted, ID = " + rowID);
@@ -139,12 +132,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d(LOG_TAG, "--- Update mytable: ---");
                 // подготовим значения для обновления
-                cv.put("mark", mark);
-                cv.put("model", model);
-                cv.put("type", type);
-                cv.put("vintage", vintage);
-                cv.put("counter", counter);
-                cv.put("reg", reg);
+                cv.put("name", name);
+                cv.put("surname", surname);
+                cv.put("middlename", middlename);
+                cv.put("sex", sex);
+                cv.put("smena", smena);
                 // обновляем по id
                 int updCount = db.update("mytable", cv, "id = ?",
                         new String[] {String.valueOf(currentUser.getId())});
@@ -179,24 +171,22 @@ public class MainActivity extends AppCompatActivity {
 
             // определяем номера столбцов по имени в выборке
             int idColIndex = c.getColumnIndex("id");
-            int markColIndex = c.getColumnIndex("mark");
-            int modelColIndex = c.getColumnIndex("model");
-            int typeColIndex = c.getColumnIndex("type");
-            int vintageColIndex = c.getColumnIndex("vintage");
-            int counterColIndex = c.getColumnIndex("counter");
-            int regColIndex = c.getColumnIndex("reg");
+            int nameColIndex = c.getColumnIndex("name");
+            int surnameColIndex = c.getColumnIndex("surname");
+            int middlenameColIndex = c.getColumnIndex("middlename");
+            int sexColIndex = c.getColumnIndex("sex");
+            int smenaColIndex = c.getColumnIndex("smena");
 
             do {
                 // получаем значения по номерам столбцов и пишем все в лог
                 Log.d(LOG_TAG,
                         "ID = " + c.getInt(idColIndex) +
-                                ", mark = " + c.getString(markColIndex) +
-                                ", model = " + c.getString(modelColIndex) +
-                                ", type = " + c.getString(typeColIndex) +
-                                ", vintage = " + c.getInt(vintageColIndex) +
-                                ", counter = " + c.getInt(counterColIndex) +
-                                ", reg = " + c.getInt(regColIndex));
-                users.add(new User(c.getString(markColIndex), c.getString(modelColIndex), c.getString(typeColIndex), c.getInt(vintageColIndex), c.getInt(counterColIndex), c.getInt(regColIndex), c.getInt(idColIndex)));
+                                ", name = " + c.getString(nameColIndex) +
+                                ", surname = " + c.getString(surnameColIndex) +
+                                ", middlename = " + c.getString(middlenameColIndex) +
+                                ", sex = " + c.getInt(sexColIndex) +
+                                ", smena = " + c.getInt(smenaColIndex));
+                users.add(new User(c.getString(nameColIndex), c.getString(surnameColIndex), c.getString(middlenameColIndex), c.getString(sexColIndex), c.getString(smenaColIndex), c.getInt(idColIndex)));
                 // переход на следующую строку
                 // а если следующей нет (текущая - последняя), то false - выходим из цикла
             } while (c.moveToNext());
@@ -220,12 +210,11 @@ public class MainActivity extends AppCompatActivity {
             // создаем таблицу с полями
             db.execSQL("create table mytable ("
                     + "id integer primary key autoincrement,"
-                    + "mark text,"
-                    + "model text,"
-                    + "type text,"
-                    + "vintage integer,"
-                    + "counter integer,"
-                    + "reg integer"
+                    + "name text,"
+                    + "surname text,"
+                    + "middlename text,"
+                    + "sex integer,"
+                    + "smena integer"
                     + ");");
         }
 
